@@ -1,0 +1,105 @@
+---
+title: "Assignment2" 
+author: "Karen Zaraspe"
+date: "July 11, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("C:/Users/Karen/Desktop/Jupyter/1040Project2")
+library(readr)
+crel <- read_csv("CRelHP.csv")
+colnames(crel)[1] <- 'Book'
+
+```
+Save Rds object for Character relationship
+```{r}
+saveRDS(crel,file="crel.Rds")
+```
+Line plot for character analysis
+```{r}
+
+plot(crel$ron_harry , xlab = "Book", ylab = 'Relationship Score',type = "b", frame = FALSE, pch = 19, 
+     col = "red", ylim=range(1:100))
+lines(crel$harry_ron, pch = 18, col = "blue", type = "b", lty = 2)
+legend("right", legend=c("Ron to Harry", "Harry to Ron"), col=c("red", "blue"), lty = 1:2, cex=0.8)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data=crel, aes(x=Book, y=harry_ron, group=1))+ geom_line(color="red")+geom_point(size=3, color="red")+
+  labs(x="", y ="Harry to Ron")+geom_text(aes(label=harry_ron),hjust=1, vjust=1)
+ggplot(data=crel, aes(x=Book, y=ron_harry, group=1))+ geom_line(color="blue")+geom_point(size=3, color="blue")+
+  labs(x="", y ="Ron to Harry")+geom_text(aes(label=ron_harry),hjust=1, vjust=1)
+
+```
+
+
+```{r}
+library(stringi)
+a="harry"
+b="ron"
+c= stri_c(a,"_",b)
+c
+d<-"Book"
+d
+```
+
+```{r}
+ggplot(data=crel, aes_string(x=d, y=c, group=1))+geom_line(color="red")+geom_point(size=3, color="red")+ labs(x="", y = "Relationship Score", title = c)+geom_text(aes_string(label=c), vjust=1, hjust=1)
+```
+
+
+```{r}
+library(readr)
+library(wordcloud)
+library(tm)
+library(RColorBrewer)
+setwd("C:/Users/Karen/Desktop/Jupyter/1040Project2")
+
+harry <- read_file("harry.txt")
+ron <- read_file("ron.txt")
+hermione <- read_file("hermione.txt")
+dumbledore <- read_file("dumbledore.txt")
+hagrid <- read_file("hagrid.txt")
+ginny <- read_file("ginny.txt")
+neville <- read_file("neville.txt")
+mcgonagall <- read_file("mcgonagall.txt")
+fred <- read_file("fred.txt")
+george <- read_file("george.txt")
+snape <- read_file("snape.txt")
+sirius <- read_file("sirius.txt")
+draco <- read_file("draco.txt")
+voldemort <- read_file("voldemort.txt")
+hedwig <- read_file("hedwig.txt")
+
+saveRDS(harry,file="harry.Rds")
+saveRDS(ron,file="ron.Rds")
+saveRDS(hermione,file="hermione.Rds")
+saveRDS(dumbledore,file="dumbledore.Rds")
+saveRDS(hagrid,file="hagrid.Rds")
+saveRDS(ginny,file="ginny.Rds")
+saveRDS(neville,file="neville.Rds")
+saveRDS(mcgonagall,file="mcgonagall.Rds")
+saveRDS(fred,file="fred.Rds")
+saveRDS(george,file="george.Rds")
+saveRDS(snape,file="snape.Rds")
+saveRDS(sirius,file="sirius.Rds")
+saveRDS(draco,file="draco.Rds")
+saveRDS(voldemort,file="voldemort.Rds")
+saveRDS(hedwig,file="hedwig.Rds")
+
+```
+Wordcloud
+```{r}
+suppressWarnings(wordcloud(dumbledore, scale = c(3,1), excludeWords = NULL, max.words=100, colors=brewer.pal(4, "Dark2")))
+
+```
+
+
+
+
